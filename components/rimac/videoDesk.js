@@ -20,12 +20,12 @@ const RimacDesk = () => {
   }, [reachedBottom]);
 
   return (
-    <div style={{ height: "10300vh", position: "relative" }}>
+    <div style={{ height: "12700vh", position: "relative" }}>
       <VideoScroll
         onLoad={(props) =>
           setStyles(props.wrapperEl, props.videoEl, props.playbackRate)
         }
-        playbackRate={50}
+        playbackRate={45}
         style={{ position: "sticky" }}
       >
         <video
@@ -37,6 +37,7 @@ const RimacDesk = () => {
           style={{
             position: "fixed",
             width: "100vw",
+            height: "100vh",
             touchAction: "none",
             left: "0",
             top: "0",

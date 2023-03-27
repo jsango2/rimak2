@@ -20,7 +20,8 @@ const LottieControl = () => {
     });
     function animatebodymovin(duration) {
       let scrollPosition = window.scrollY;
-      if (scrollPosition >= 150200) {
+      console.log("scroll", scrollPosition);
+      if (scrollPosition >= 149300) {
         window.scrollTo({
           top: 0,
           // behavior: "smooth",
@@ -47,7 +48,7 @@ const LottieControl = () => {
 
   return (
     <animated.div ref={target}>
-      <div style={{ height: "17000vh", position: "relative" }}>
+      <div style={{ height: "17800vh", position: "relative" }}>
         <div
           style={{
             position: "fixed",
