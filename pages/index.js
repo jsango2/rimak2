@@ -1,69 +1,74 @@
-import React, { useEffect, useState, useRef } from "react";
-import dynamic from "next/dynamic";
-import usewindowsize from "../components/helper/usewindowsize";
-import animacija from "../components/rimac/rimacLottie/animacija";
-import animacijaJson from "../components/rimac/rimacLottie/jsonRimac.json";
-import AnimacijaIkona from "../components/rimac/rimacLottie/animacijaIkona";
-import Lottie, { useLottie } from "lottie-react";
-import styled from "styled-components";
+import React, { useRef } from "react";
+import lottie from "lottie-web";
+import animationData from "../components/rimac/rimacLottie/json45vertical.json";
 
-const Body = styled.div`
-  position: relative;
-  height: 1000vh;
-  left: 0;
+import { animated } from "@react-spring/web";
 
-  scroll-behavior: smooth;
-`;
+const LottieControl = () => {
+  const target = useRef(null);
+  const lottieRef = React.useRef(null);
 
-const Wrap = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
+  let length = 0;
 
-  /* top: 30%;
-  left: 50%;
-  transform: translate(-50%, 0); */
-`;
+  React.useEffect(() => {
+    var animDuration = 15000;
+    const anim = lottie.loadAnimation({
+      container: lottieRef.current,
+      loop: false,
+      autoplay: false,
+      animationData,
+    });
+    function animatebodymovin(duration) {
+      let scrollPosition = window.scrollY;
+      console.log("scroll", scrollPosition);
+      // if (scrollPosition >= 169300) {
+      //   window.scrollTo({
+      //     top: 0,
 
-const Rimac = dynamic(() => import("../components/rimac/videoDesk"), {
-  ssr: false,
-});
-// const RimacMobile = dynamic(() => import("../components/rimac/videoMobile"), {
-//   ssr: false,
-// });
-const style = {
-  position: "sticky",
-  top: "0",
-  height: "400px",
-};
-const interactivity = {
-  mode: "scroll",
-  actions: [
-    {
-      visibility: [0.4, 0.6],
-      type: "seek",
-      frames: [0, 725],
-    },
-  ],
-};
-export default function Index() {
-  const size = usewindowsize();
+      //   });
+      // }
+      // const scrollPosition = pinc
+      const maxFrames = anim.totalFrames;
+      // const frame = (maxFrames / 1) * ((scrollPosition/1000) / (duration *10));
+      const frame = (maxFrames / 1) * (scrollPosition / 10 / duration);
+      if (frame > maxFrames) {
+        window.scrollTo({
+          top: 0,
+        });
+      }
+      anim.goToAndStop(frame, true);
+    }
+    animatebodymovin(animDuration);
+    const onScroll = () => {
+      animatebodymovin(animDuration);
+    };
+
+    document.addEventListener("scroll", onScroll);
+
+    return () => {
+      anim.destroy();
+      document.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   return (
-    <>
-      {size.width > 600 ? (
-        <Body className="example">
-          <Wrap>
-            {/* <Lottie
-                animationData={animacijaJson}
-                interactivity={interactivity}
-                style={style}
-              /> */}
-            <Rimac />
-          </Wrap>
-        </Body>
-      ) : (
-        <div>jure</div>
-      )}
-    </>
+    <animated.div ref={target}>
+      <div style={{ height: "17800vh", position: "relative" }}>
+        <div
+          style={{
+            position: "fixed",
+            height: "100vh",
+            width: "100vw",
+            display: "flex",
+            touchAction: "auto",
+            left: "0",
+          }}
+          ref={lottieRef}
+          id="myElement"
+        ></div>
+      </div>
+    </animated.div>
   );
-}
+};
+
+export default LottieControl;
