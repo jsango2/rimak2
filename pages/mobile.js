@@ -21,16 +21,21 @@ const LottieControl = () => {
     function animatebodymovin(duration) {
       let scrollPosition = window.scrollY;
       console.log("scroll", scrollPosition);
-      if (scrollPosition >= 149300) {
-        window.scrollTo({
-          top: 0,
-          // behavior: "smooth",
-        });
-      }
+      // if (scrollPosition >= 169300) {
+      //   window.scrollTo({
+      //     top: 0,
+
+      //   });
+      // }
       // const scrollPosition = pinc
       const maxFrames = anim.totalFrames;
       // const frame = (maxFrames / 1) * ((scrollPosition/1000) / (duration *10));
       const frame = (maxFrames / 1) * (scrollPosition / 10 / duration);
+      if (frame > maxFrames) {
+        window.scrollTo({
+          top: 0,
+        });
+      }
       anim.goToAndStop(frame, true);
     }
     animatebodymovin(animDuration);

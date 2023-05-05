@@ -12,7 +12,7 @@ const setStyles = (wrapperEl, videoEl, playbackRate) => {
   })`;
 };
 
-const RimacDesk = () => {
+const RimacDesk = ({ rate }) => {
   const reachedBottom = usePageBottom();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const RimacDesk = () => {
         onLoad={(props) =>
           setStyles(props.wrapperEl, props.videoEl, props.playbackRate)
         }
-        playbackRate={45}
+        playbackRate={rate}
         style={{ position: "sticky" }}
       >
         <video
@@ -44,7 +44,7 @@ const RimacDesk = () => {
           }}
           playsInline
         >
-          {/* <source type="video/mp4" src="./RimacHdOff.mp4" /> */}
+          <source type="video/mp4" src="./RimacHd.mp4" />
         </video>
       </VideoScroll>
     </div>
